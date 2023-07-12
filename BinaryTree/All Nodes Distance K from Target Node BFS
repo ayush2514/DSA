@@ -1,0 +1,66 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Solution {
+    HashMap<TreeNode, TreeNode> parent = new HashMap<>();
+
+public void inOrder(TreeNode root) {
+    if(root==null)
+    return;
+    if(root.left != null)
+    parent.put(root.left,root);
+    inOrder(root.left);
+     if(root.right != null)
+    parent.put(root.right,root);
+    inOrder(root.right);
+}
+
+public void BFS(TreeNode target, int k,List<Integer> result) {
+    Queue<TreeNode> q=new LinkedList<>();
+    q.add(target);
+    HashSet<TreeNode> visited=new HashSet<>();
+    visited.add(target);
+    
+    while(!q.isEmpty())
+    {
+        int n=q.size();
+        if(k==0) break; 
+        while(n-->0) {
+        TreeNode curr=q.remove();
+        if(curr.left!=null && !visited.contains(curr.left)) {
+            q.add(curr.left);
+            visited.add(curr.left);
+        }
+        if(curr.right!=null && !visited.contains(curr.right)) {
+            q.add(curr.right);
+            visited.add(curr.right);
+        }
+        if(parent.containsKey(curr) && !visited.contains(
+            parent.get(curr)))
+        {
+            q.add(parent.get(curr));
+            visited.add(parent.get(curr));
+        }
+    }
+    k--;
+    }
+    while(!q.isEmpty()) {
+        TreeNode x=q.remove();
+        result.add(x.val);
+    }
+
+}
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        List<Integer> result = new ArrayList<>();
+        inOrder(root);
+        BFS(target, k, result);
+        return result;
+    }
+}
