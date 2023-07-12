@@ -1,0 +1,40 @@
+class Solution {
+  public int largestVariance(String s) {
+      int freq[]=new int[26];
+      for(int i=0;i<s.length();i++) {
+          if(freq[s.charAt(i)-'a']==0)
+          freq[s.charAt(i)-'a']++;
+      }
+      
+      boolean prevSecond=false;
+      int result=0;
+      for(char first='a';first<='z';first++) {
+          for(char second='a';second<='z';second++) {
+              if(freq[first-'a']==0 || freq[second-'a']==0)
+              continue;
+             int countFirst=0;
+             int countSecond=0;
+              for(int i=0;i<s.length();i++) 
+              {
+                  char ch=s.charAt(i);
+              if(ch==first) countFirst++;
+              if(ch==second) countSecond++;
+              if(countSecond>0) {
+                  result=Math.max(result,countFirst-countSecond);
+              }
+              else {
+                  if(prevSecond==true) {
+                      result=Math.max(result,countFirst-1);
+                  }
+              }
+              if(countSecond>countFirst) {
+                  countSecond=0;
+                  countFirst=0;
+                  prevSecond=true;
+              }
+          }
+      }
+  }
+  return result;
+  }
+}
