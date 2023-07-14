@@ -1,0 +1,17 @@
+class Solution {
+    public long putMarbles(int[] weights, int k) {
+        long minsum=0;
+        long maxsum=0;
+        
+        int pairSum[]=new int[weights.length-1];
+        for(int i=0;i<weights.length-1;i++) {
+            pairSum[i]=weights[i]+weights[i+1];
+        }
+        Arrays.sort(pairSum);
+        for(int i=0;i<k-1;i++) {
+            minsum+=pairSum[i];
+            maxsum+=pairSum[weights.length-2-i];
+        }
+        return maxsum-minsum;
+    }
+}

@@ -1,0 +1,10 @@
+class Solution {
+    public int findValueOfPartition(int[] nums) {
+        Arrays.sort(nums);
+        int result=Math.abs(nums[0]-nums[1]);
+        for(int i=2;i<nums.length;i++) {
+    result=Math.min(result,Math.abs(nums[i-1]-nums[i]));
+        }
+       return result; 
+    }
+}
