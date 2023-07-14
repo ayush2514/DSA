@@ -1,0 +1,42 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    static int count=0;
+        public static void MS(long ar[],int low,int high) {
+        if(low==high)
+        return;
+        int mid=(low+high)/2;
+        MS(ar,0,mid);
+        MS(ar,mid+1,high);
+        Merge(ar,low,mid,high);
+    }
+    public static void Merge(long ar[],int low,int mid,int high) {
+        int left=low;
+        int right=mid+1;
+        long temp[]=new long[ar.length];
+        int k=0;
+
+
+        while(left<=mid && right<=high) {
+            if(ar[left]<ar[right]){
+                temp[k++]=ar[left++];
+            }
+            else {
+                count+=(mid-left+1);
+                 temp[k++]=ar[right++];
+            }
+        }
+        while(left<=mid) temp[k++]=ar[left++];
+        while(right<=high) temp[k++]=ar[right++];
+
+        for(int i=low;i<=high;i++) {
+            ar[i]=temp[i-low];
+        }
+        
+    }
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        MS(arr,0,n-1);
+        return count;
+    }
+}
