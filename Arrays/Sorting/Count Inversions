@@ -3,7 +3,7 @@ import java.io.*;
 public class Solution {
     static int count=0;
         public static void MS(long ar[],int low,int high) {
-        if(low==high)
+        if(low=high)
         return;
         int mid=(low+high)/2;
         MS(ar,0,mid);

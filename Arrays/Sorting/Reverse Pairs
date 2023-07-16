@@ -1,0 +1,50 @@
+class Solution {
+    int count=0;
+    public void Merge(long ar[],int low,int mid,int high) {
+        int left=low;
+        int right=mid+1;
+        long temp[]=new long[high - low + 1];
+        int k=0;
+        while(left<=mid && right<=high) {
+            if(ar[left]<=ar[right]){
+                temp[k++]=ar[left++];
+            }
+            else {
+                temp[k++]=ar[right++];
+            }
+        }
+        while(left<=mid) temp[k++]=ar[left++];
+        while(right<=high) temp[k++]=ar[right++];
+
+        for(int i=0;i<k;i++) {
+            ar[i+low]=temp[i];
+        }
+    }
+    public void ReversePair(long nums[],int low,int mid,int high) {
+        int right=mid+1;
+        for(int i=low;i<=mid;i++)
+        {
+            while(right<=high && nums[i]>2*nums[right])
+                right++;
+            count+=(right-(mid+1));
+        }
+    }
+
+    public void MS(long nums[],int low,int high) {
+        if(low>=high) return;
+        int mid=(low+high)/2;
+        MS(nums,low,mid);
+        MS(nums,mid+1,high);
+        ReversePair(nums,low,mid,high);
+        Merge(nums,low,mid,high);
+    }
+    public int reversePairs(int[] nums) {
+        int n=nums.length;
+        long[] numsLong = new long[n];
+        for (int i = 0; i < n; i++) {
+            numsLong[i] = nums[i];
+        }
+        MS(numsLong,0,n-1);
+        return count;
+    }
+}
