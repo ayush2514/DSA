@@ -1,0 +1,67 @@
+class Pair implements Comparable<Pair> {
+    int st;
+    int et;
+    int p;
+
+    Pair(int s,int e, int p) {
+        this.st=s;
+        this.et=e;
+        this.p=p;
+    }
+    public int compareTo(Pair other) {
+        if(this.st!=other.st)
+        return this.st-other.st;
+        else
+        return this.et-other.et;
+    }
+}
+
+
+class Solution {
+     int dp[]=new int[500001];
+int solve( Pair pair[],int idx) {
+
+    if(idx>=pair.length) return 0;
+
+    if(dp[idx]!=-1) return dp[idx];
+    int nextJobIndex=getNextIndex(pair,idx+1,pair[idx].et);
+     
+    int take=pair[idx].p+solve(pair,nextJobIndex);
+    int nottaken=solve(pair,idx+1);
+    return dp[idx]=Math.max(take,nottaken);
+}
+
+int getNextIndex(Pair pair[],int low,int currrentJobIndex) {
+    int high=pair.length-1;
+
+    int result=Integer.MAX_VALUE;
+    while(low<=high) {
+        int mid=low+(high-low)/2;
+        if(pair[mid].st>=currrentJobIndex)
+        {
+            result=mid;
+            high=mid-1;
+        }
+        else {
+            low=mid+1;
+        }
+    }
+    return result;
+}
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        Pair pair[]=new Pair[startTime.length];
+       
+
+        for(int i=0;i<pair.length;i++) {
+            pair[i]=new Pair(startTime[i],endTime[i],
+            profit[i]);
+        }
+
+        Arrays.sort(pair);
+
+         for (int i = 0; i <500001; i++) {
+            dp[i]=-1;
+        }
+        return solve(pair,0);
+    }
+}

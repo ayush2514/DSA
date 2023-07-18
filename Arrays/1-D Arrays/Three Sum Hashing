@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+ HashSet<List<Integer>> nset = new HashSet<>();
+
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length;i++) {
+            HashSet<Integer> set=new HashSet<>();
+            for(int j=i+1;j<nums.length;j++) {
+                int third=-(nums[i]+nums[j]);
+                if(!(set.contains(third))) {
+                    set.add(nums[j]);
+                }
+                else {
+                    List<Integer> innerList = new ArrayList<>();
+                        innerList.add(nums[i]);
+                        innerList.add(nums[j]);
+                        innerList.add(third);
+                        nset.add(innerList);
+                }
+            }
+        }
+          list.addAll(nset);
+        return list;
+    }
+}

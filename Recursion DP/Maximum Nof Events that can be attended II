@@ -1,0 +1,59 @@
+class Event implements Comparable<Event> 
+{
+    int startDay;
+    int endDay;
+    int value;
+
+    Event(int sd,int ed,int v) {
+        this.startDay=sd;
+        this.endDay=ed;
+        this.value=v;
+    }
+    public int compareTo(Event other) {
+        if(this.startDay !=other.startDay)
+        return this.startDay-other.startDay;
+        else
+        return other.endDay-other.endDay;
+    }
+}
+class Solution {
+    int solve(Event[] e,int idx,int k,int dp[][]) {
+
+        if(idx>=e.length || k==0)
+        return 0;
+
+        if(dp[idx][k]!=-1) return dp[idx][k];
+
+        int start=e[idx].startDay;
+        int end=e[idx].endDay;
+        int val=e[idx].value;
+
+        int skip=solve(e,idx+1,k,dp);
+
+        int j=idx+1;
+        for( ;j<e.length;j++) {
+            if(e[j].startDay>e[idx].endDay)
+            break;
+        }
+
+        int take=val+solve(e,j,k-1,dp);
+        return dp[idx][k]=Math.max(skip,take);
+    }
+    public int maxValue(int[][] events, int k) {
+        Event[] e=new Event[events.length];
+
+        for(int i=0;i<events.length;i++) {
+        e[i]=new Event(events[i][0],events[i][1],events[i][2]);
+        }
+
+        int dp[][]=new int[events.length][k+1];
+        for(int i=0;i<events.length;i++) {
+            for(int j=0;j<k+1;j++) {
+                dp[i][j]=-1;
+            }
+        }
+        Arrays.sort(e);
+
+        return solve(e,0,k,dp);
+    }
+}
