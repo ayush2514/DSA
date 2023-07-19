@@ -1,0 +1,42 @@
+class Pair implements Comparable<Pair> {
+    int sp;
+    int ep;
+
+    Pair(int sp, int ep) {
+        this.sp = sp;
+        this.ep = ep;
+    }
+
+    public int compareTo(Pair other) {
+        if (this.ep != other.ep)
+            return this.ep - other.ep;
+        else
+            return this.sp - other.sp;
+    }
+}
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+
+        Pair pair[] = new Pair[intervals.length];
+        for (int i = 0; i < pair.length; i++) {
+            pair[i] = new Pair(intervals[i][0], intervals[i][1]);
+        }
+        Arrays.sort(pair);
+
+        int end = pair[0].ep;
+        int count = 1;
+
+        for (int i = 1; i < pair.length; i++) {
+            if (pair[i].sp >= end) {
+                end = pair[i].ep;
+                count++;
+            }
+        }
+
+        return intervals.length - count;
+    }
+}
