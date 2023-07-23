@@ -1,0 +1,26 @@
+class Solution {
+    public int trap(int[] height) {
+        if(height == null || height.length == 0) return 0;
+        
+        int prefixsum[]=new int[height.length];
+        int suffixsum[]=new int[height.length];
+        int count=0;
+        
+        prefixsum[0]=height[0];
+        suffixsum[height.length-1]=height[height.length-1];
+        
+        for(int i=1;i<height.length;i++) {
+            prefixsum[i]=Math.max(height[i],prefixsum[i-1]);
+        }
+        
+        for(int j=height.length-2;j>=0;j--) {
+            suffixsum[j]=Math.max(height[j],suffixsum[j+1]);
+        }
+        
+        for(int i=0;i<height.length;i++) {
+            count+=Math.min(prefixsum[i],suffixsum[i])-height[i];
+        }
+        
+        return count;
+    }
+}
