@@ -1,0 +1,34 @@
+class Pair implements Comparable<Pair>{
+    int st;
+    int et;
+    Pair(int s,int e) {
+        this.st=s;
+        this.et=e;
+    }
+    public int compareTo(Pair other) {
+        return this.et-other.et;
+    }
+}
+class Solution 
+{
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    public static int maxMeetings(int start[], int end[], int n)
+    {
+        // add your code here
+        Pair pair[]=new Pair[n];
+        for(int i=0;i<n;i++) {
+            pair[i]=new Pair(start[i],end[i]);
+        }
+        Arrays.sort(pair);
+        int endtime=pair[0].et;
+        int count=1;
+        for(int i=1;i<n;i++) {
+            if(pair[i].st>endtime) {
+                count++;
+                endtime=pair[i].et;
+            }
+        }
+        return count;
+    }
+}
