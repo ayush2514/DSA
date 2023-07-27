@@ -1,0 +1,23 @@
+public class Solution {
+    public int balancedStringSplit(String s) {
+        int countR = 0;
+        int countL = 0;
+        int cBS = 0;
+
+        for (char ch : s.toCharArray()) {
+            if (ch == 'R') {
+                countR++;
+            } else if (ch == 'L') {
+                countL++;
+            }
+
+            if (countR == countL) {
+                cBS++;
+                countR = 0;
+                countL = 0;
+            }
+        }
+
+        return cBS;
+    }
+}

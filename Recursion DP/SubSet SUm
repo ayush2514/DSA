@@ -1,0 +1,17 @@
+class Solution{
+    public void calculateSubsetSum(ArrayList<Integer> arr, ArrayList<Integer> result,int N,int index,int sum) {
+        if(index==N) {
+            result.add(sum);
+            return;
+        }
+        calculateSubsetSum(arr,result,N,index+1,sum+arr.get(index));
+        calculateSubsetSum(arr,result,N,index+1,sum);
+    }
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+        // code here
+        ArrayList<Integer> result=new ArrayList<>();
+        calculateSubsetSum(arr,result,N,0,0);
+        Collections.sort(result);
+        return result; 
+    }
+}

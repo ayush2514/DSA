@@ -1,0 +1,28 @@
+class Solution {
+  public double possible(int []dist,int mid_speed) {
+    double time=0.0;
+    for(int i=0;i<dist.length-1;i++) {
+      double total=(double)dist[i]/(double)mid_speed;
+      time+=Math.ceil(total);
+    }
+    time+=(double)dist[dist.length-1]/(double)mid_speed;
+    return time;
+  }
+    public int minSpeedOnTime(int[] dist, double hour) {
+        int low=1;
+        int high=10000000;
+        int result=-1;
+        while(low<=high) {
+          int mid_speed=low+(high-low)/2;
+          if(possible(dist,mid_speed)<=hour)
+          {
+            result=mid_speed;
+            high=mid_speed-1;
+          }
+          else {
+            low=mid_speed+1;
+          }
+        }
+        return result;
+    }
+}
