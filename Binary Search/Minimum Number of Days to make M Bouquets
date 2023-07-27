@@ -1,0 +1,42 @@
+class Solution {
+  public int noOfBouquetMadeDay(int[] bloomDay, int m, int k,int mid) {
+    int count=0;
+    int nofbouquetmade=0;
+    for(int i=0;i<bloomDay.length;i++) {
+     
+      if(bloomDay[i]>mid) {
+        if(count>=k)
+        nofbouquetmade+=(count)/k;
+        count=0;
+      }
+      else 
+      count++;   
+    }
+    if(count>=k)
+        nofbouquetmade+=(count)/k;
+    return nofbouquetmade;
+  }
+    public int minDays(int[] bloomDay, int m, int k) {
+      if(m*k>bloomDay.length) return -1;
+      int min=Integer.MAX_VALUE;
+      int max=Integer.MIN_VALUE;
+      for(int element : bloomDay)
+      min=Math.min(min,element);
+      for(int element : bloomDay)
+      max=Math.max(max,element);
+
+      int low=min;
+      int high=max;
+      int result=-1;
+      while(low<=high) {
+        int mid=low+(high-low)/2;
+        if(noOfBouquetMadeDay(bloomDay,m,k,mid)>=m) {
+          result=mid;
+          high=mid-1;
+        }
+        else
+        low=mid+1;
+      }
+      return result;
+    }
+}

@@ -1,0 +1,42 @@
+class Solution {
+    public int calculateDays(int[] weights, int capacity) {
+        int days = 1; // Start with 1 day (at least one day needed)
+        int currentWeight = 0;
+
+        for (int weight : weights) {
+            if (currentWeight + weight > capacity) {
+                days++;
+                currentWeight = 0;
+            }
+            currentWeight += weight;
+        }
+
+        return days;
+    }
+
+    public int shipWithinDays(int[] weights, int days) {
+        int max = Integer.MIN_VALUE;
+        int totalWeight = 0;
+
+        for (int weight : weights) {
+            max = Math.max(max, weight);
+            totalWeight += weight;
+        }
+
+        int low = max;
+        int high = totalWeight;
+        int result = 0;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (calculateDays(weights, mid) <= days) {
+                result = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return result;
+    }
+}
