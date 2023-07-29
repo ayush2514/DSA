@@ -1,0 +1,31 @@
+class Solution {
+  //Is this minimum distance possible to place all the balls 'm' balls
+  public boolean isMinimumDistancePossible(int[] position, int m,int mid) {
+    int noOfBallsPlaced=1;
+    int placeLocation=position[0];
+    for(int i=1;i<position.length && noOfBallsPlaced<m;i++) {
+      if(position[i]>=placeLocation+mid) {
+        noOfBallsPlaced++;
+        placeLocation=position[i];
+      }
+    }
+    if(noOfBallsPlaced<m) return false;
+    return true;
+  }
+    public int maxDistance(int[] position, int m) {
+      Arrays.sort(position);
+      int low=1;
+      int high=position[position.length-1]-position[0];
+      int result=1;
+      while(low<=high) {
+        int mid=low+(high-low)/2;
+        if(isMinimumDistancePossible(position,m,mid)) {
+          result=mid;
+          low=mid+1;
+        }
+        else
+        high=mid-1;
+      }
+      return result;
+    }
+}
