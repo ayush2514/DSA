@@ -1,0 +1,37 @@
+class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+       int dp[][]=new int[nums.length][nums.length];
+       int P1=0;
+       for(int gap=0;gap<dp.length;gap++) {
+         for(int i=0,j=gap;j<dp.length;i++,j++) {
+           if(gap==0) {
+             dp[i][j]=nums[i];
+           }
+           else if(gap==1) {
+             dp[i][j]=Math.max(nums[i],nums[j]);
+           }
+           else {
+             //i--> i+1,j
+             //if i+1-->i+2,j
+             //if j -->i+1,j-1
+             int val1=nums[i]+Math.min(dp[i+2][j],dp[i+1][j-1]);
+
+             //j--> i,j-1
+             //if i -->i+1,j-1
+             //if j-1 -->i,j-2
+             int val2=nums[j]+Math.min(dp[i+1][j-1],dp[i][j-2]);
+             P1=Math.max(val1,val2);
+             dp[i][j]=P1;
+           }
+         }
+       }
+       int sum=0;
+       for(int element : nums)
+       sum+=element;
+
+       if(nums.length==1 || nums.length==2) return true;
+      
+       int P2=sum-P1;
+       return P1>=P2;
+    }
+}
