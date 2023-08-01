@@ -1,0 +1,20 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+       
+        int limit=(int)Math.pow(2,nums.length);
+        for(int i=0;i<limit;i++) {
+          int temp=i;
+          List<Integer> list = new ArrayList<>();
+          for(int j=nums.length-1;j>=0;j--) {
+            int remainder=temp%2;
+            temp/=2;
+
+            if(remainder==1)  
+            list.add(nums[j]);
+          }
+          ans.add(list);
+        }
+        return ans;
+    }
+}
